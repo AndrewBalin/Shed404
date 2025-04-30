@@ -92,7 +92,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
             ""id"": ""e11db08b-4028-4b83-a293-ea524dcb5ac6"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""Controller"",
                     ""type"": ""Button"",
                     ""id"": ""57d31e05-9f8c-48ff-a957-c8b8e124f54d"",
                     ""expectedControlType"": """",
@@ -109,7 +109,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Controller"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -120,7 +120,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
 }");
         // Main
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
-        m_Main_Move = m_Main.FindAction("Move", throwIfNotFound: true);
+        m_Main_Controller = m_Main.FindAction("Controller", throwIfNotFound: true);
     }
 
     ~@CustomActions()
@@ -201,7 +201,7 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
     // Main
     private readonly InputActionMap m_Main;
     private List<IMainActions> m_MainActionsCallbackInterfaces = new List<IMainActions>();
-    private readonly InputAction m_Main_Move;
+    private readonly InputAction m_Main_Controller;
     /// <summary>
     /// Provides access to input actions defined in input action map "Main".
     /// </summary>
@@ -214,9 +214,9 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
         /// </summary>
         public MainActions(@CustomActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Main/Move".
+        /// Provides access to the underlying input action "Main/Controller".
         /// </summary>
-        public InputAction @Move => m_Wrapper.m_Main_Move;
+        public InputAction @Controller => m_Wrapper.m_Main_Controller;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -243,9 +243,9 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MainActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MainActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
+            @Controller.started += instance.OnController;
+            @Controller.performed += instance.OnController;
+            @Controller.canceled += instance.OnController;
         }
 
         /// <summary>
@@ -257,9 +257,9 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
         /// <seealso cref="MainActions" />
         private void UnregisterCallbacks(IMainActions instance)
         {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
+            @Controller.started -= instance.OnController;
+            @Controller.performed -= instance.OnController;
+            @Controller.canceled -= instance.OnController;
         }
 
         /// <summary>
@@ -301,11 +301,11 @@ public partial class @CustomActions: IInputActionCollection2, IDisposable
     public interface IMainActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Controller" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMove(InputAction.CallbackContext context);
+        void OnController(InputAction.CallbackContext context);
     }
 }

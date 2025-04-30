@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.AI;
+using Unity.VisualScripting;
 
 
 public class PlayerController : MonoBehaviour
@@ -17,7 +18,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] ParticleSystem clickEffect;
-    [SerializeField] LayerMask clickableLayers;
+    [SerializeField] LayerMask clickableGround;
+
+    [Header("Action")]
+    
+    [SerializeField] LayerMask clickableObject;
+
 
     float lookRotationSpeed = 8f;
 
@@ -32,14 +38,18 @@ public class PlayerController : MonoBehaviour
 
     void AssignInputs ()
     {
-        input.Main.Move.performed += ctx => ClickToMove();
+        input.Main.Controller.performed += ctx => ClickToMove();
 
     }
 
     void ClickToMove()
     {
         RaycastHit hit;
-        if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit, 100, clickableLayers))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, clickableObject))
+                {
+                    Debug.Log(hit.collider.gameObject.name);
+                }
+        else if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit, 100, clickableGround))
         {
             agent.destination = hit.point;
             if (clickEffect != null)
@@ -47,7 +57,11 @@ public class PlayerController : MonoBehaviour
                 Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);        
             }
         }
+        FaceTarget();
+        
     }
+
+   
 
     void OnEnable()
     {
@@ -61,7 +75,7 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        FaceTarget();
+       // FaceTarget();
         SetAnimations();
     }
 
@@ -69,7 +83,8 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 direction = (agent.destination - transform.position).normalized;    
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x,0,direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation,lookRotation, Time.deltaTime * lookRotationSpeed);
+        //transform.rotation = Quaternion.Slerp(transform.rotation,lookRotation, Time.deltaTime * lookRotationSpeed);
+        transform.rotation = lookRotation;  
     }
 
     void SetAnimations()
@@ -83,4 +98,9 @@ public class PlayerController : MonoBehaviour
             animator.Play(WALK);
         }
     }
+}
+
+public class Quest: MonoBehaviour
+{
+    
 }

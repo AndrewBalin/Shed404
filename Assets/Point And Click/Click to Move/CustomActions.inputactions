@@ -6,7 +6,7 @@
             "id": "e11db08b-4028-4b83-a293-ea524dcb5ac6",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "Controller",
                     "type": "Button",
                     "id": "57d31e05-9f8c-48ff-a957-c8b8e124f54d",
                     "expectedControlType": "",
@@ -23,7 +23,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Controller",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
