@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask clickableObject;
 
 
-    float lookRotationSpeed = 8f;
+    //float lookRotationSpeed = 8f;
 
     void Awake()
     {
