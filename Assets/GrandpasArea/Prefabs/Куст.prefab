@@ -52,10 +52,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u041A\u0443\u0441\u0442"
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bfc8a37b46ee5fa43ab5ce88a47e80a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bfc8a37b46ee5fa43ab5ce88a47e80a0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1446317025356153247, guid: bfc8a37b46ee5fa43ab5ce88a47e80a0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 8e1f53d53a68fa14fa6cc53169707c94, type: 2}
+    - target: {fileID: 8603806674150118374, guid: bfc8a37b46ee5fa43ab5ce88a47e80a0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
