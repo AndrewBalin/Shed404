@@ -67,12 +67,12 @@ Material:
     - _WindCIntensity: 0.125
     - _WindStrength: 0.7
     m_Colors:
-    - _AOColor: {r: 0.049987763, g: 0.3207547, b: 0, a: 1}
+    - _AOColor: {r: 0.20731595, g: 0.3773585, b: 0.02669989, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 0.45098042, g: 0.6666667, b: 0.19215688, a: 1}
     - _Color2: {r: 0.19215688, g: 0.5254902, b: 0.2509804, a: 1}
     - _Color3: {r: 0.12941177, g: 0.31764707, b: 0.37647063, a: 1}
-    - _ColorA: {r: 0, g: 0.5294118, b: 0.1719094, a: 1}
+    - _ColorA: {r: 0.5294118, g: 0.4634455, b: 0, a: 1}
     - _ColorB: {r: 0.5109501, g: 0.7529412, b: 0, a: 1}
     - _ExpandDistantGrassRange: {r: 10, g: 300, b: 0, a: 0}
     - _GroundColor: {r: 0.045567818, g: 0.3018868, b: 0, a: 1}
@@ -84,6 +84,7 @@ Material:
     - _WindCWrap: {r: 0.5, g: 0.5, b: 0, a: 1}
     - _WindScroll: {r: -0.15, g: -0.15, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &5562977372024722440
 MonoBehaviour:
   m_ObjectHideFlags: 11
