@@ -31,24 +31,21 @@ namespace Movement
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit groundHit, 100f, groundMask))
-                {
-                    agent.SetDestination(groundHit.point);
-                    if (_currentInteractable != null)
-                    {
-                        _currentInteractable.OnUnhover();
-                        _currentInteractable = null;
-                    }
-                }
-                else if (Physics.Raycast(ray, out RaycastHit interactableHit, 100f, interactableMask))
+                if (Physics.Raycast(ray, out RaycastHit interactableHit, 100f, interactableMask))
                 {
                     Interactable interactable = interactableHit.collider.GetComponent<Interactable>();
-                    if (interactable != null)
+                    if (interactable != null && interactable.interactionDistance > Vector3.Distance(
+                                                        agent.transform.position, interactable.transform.position))
                     {
                         _currentInteractable = interactable;
                         _currentInteractable.PerformAction("Use", agent);
                     }
                 }
+                else if (Physics.Raycast(ray, out RaycastHit groundHit, 100f, groundMask))
+                {
+                    agent.SetDestination(groundHit.point);
+                }
+                
             }
         }
         
@@ -62,11 +59,8 @@ namespace Movement
                 {
                     if (_currentInteractable != null)
                         _currentInteractable.OnUnhover();
-                    if (hover.interactionDistance > Vector3.Distance(agent.transform.position, hover.transform.position))
-                    {
-                        _currentInteractable = hover;
-                        _currentInteractable.OnHover();
-                    }
+                    _currentInteractable = hover;
+                    _currentInteractable.OnHover();
                 }
             }
             else if (_currentInteractable != null)

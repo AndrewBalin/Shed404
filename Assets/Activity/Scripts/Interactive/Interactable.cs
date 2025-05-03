@@ -21,8 +21,6 @@ namespace Interactive
         
         public void OnHover()
         {
-            Debug.Log($"Hovering over {gameObject.name}");
-            
             _outline.enabled = true;
         }
         
@@ -33,7 +31,6 @@ namespace Interactive
         
         public void PerformAction(string action, NavMeshAgent agent)
         {
-            Debug.Log($"Action {action} performed on {gameObject.name}");
             useCase.Interact(this, agent, action);
         }
     }
