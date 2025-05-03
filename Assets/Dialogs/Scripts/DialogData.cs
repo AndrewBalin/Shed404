@@ -25,7 +25,10 @@ public class DialogNode
 public class DialogNodeWithId
 {
     public string id;
-    public DialogNode node;
+    public string speaker;
+    public string text;
+    public List<DialogOption> options;
+    public string next;
 }
 
 
@@ -34,11 +37,11 @@ public class DialogWrapper
 {
     public List<DialogNodeWithId> nodes;
 
-    public Dictionary<string, DialogNode> ToDictionary()
+    public Dictionary<string, DialogNodeWithId> ToDictionary()
     {
-        var dict = new Dictionary<string, DialogNode>();
+        var dict = new Dictionary<string, DialogNodeWithId>();
         foreach (var entry in nodes)
-            dict[entry.id] = entry.node;
+            dict[entry.id] = entry;
         return dict;
     }
 }

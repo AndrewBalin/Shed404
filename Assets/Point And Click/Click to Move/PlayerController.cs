@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Dialogs.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.AI;
@@ -45,10 +46,13 @@ public class PlayerController : MonoBehaviour
     void ClickToMove()
     {
         RaycastHit hit;
+        if (DialogUI.instance != null && DialogUI.instance.IsOpen)
+            return;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, clickableObject))
-                {
-                    Debug.Log(hit.collider.gameObject.name);
-                }
+        {
+            Debug.Log(hit.collider.gameObject.name);
+            DialogManager.instance.StartDialog("introduction_start");
+        }
         else if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit, 100, clickableGround))
         {
             agent.destination = hit.point;

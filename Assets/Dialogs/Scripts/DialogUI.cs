@@ -16,24 +16,50 @@ namespace Dialogs.Scripts
         [Header("Options")]
         public GameObject optionsContainer;
         public GameObject optionPrefab;
+        
+        [Header("Canvas")]
+        public GameObject dialogBoxRoot;
+        public Canvas dialogCanvas;
 
+        public bool IsOpen { get; private set; }
+        
         void Awake()
         {
             instance = this;
             
-            continueButton.GetComponent<Button>().onClick.AddListener(
-                () => DialogManager.instance.ContinueDialog()
-            );
+            if (dialogCanvas == null)
+                dialogCanvas = GetComponentInParent<Canvas>();
+
+            if (dialogBoxRoot != null)
+                dialogBoxRoot.SetActive(false);
+
+            if (dialogCanvas != null)
+                dialogCanvas.gameObject.SetActive(false);
+
+            if (continueButton != null)
+            {
+                var btn = continueButton.GetComponent<Button>();
+                if (btn != null)
+                    btn.onClick.AddListener(() => DialogManager.instance.ContinueDialog());
+            }
         }
 
-        public void Show(DialogNode node)
+        public void Show(DialogNodeWithId node)
         {
+            IsOpen = true;
+            
+            if (dialogCanvas != null)
+                dialogCanvas.gameObject.SetActive(true);
+
+            if (dialogBoxRoot != null)
+                dialogBoxRoot.SetActive(true);
+
             speakerText.text = node.speaker;
             dialogText.text = node.text;
 
             foreach (Transform child in optionsContainer.transform)
                 Destroy(child.gameObject);
-            
+
             continueButton.SetActive(!string.IsNullOrEmpty(node.next));
             
             for (int i = 0; i < node.options.Count; i++)
@@ -46,7 +72,13 @@ namespace Dialogs.Scripts
         }
         public void Hide()
         {
-            gameObject.SetActive(false);
+            IsOpen = false;
+
+            if (dialogBoxRoot != null)
+                dialogBoxRoot.SetActive(false);
+
+            if (dialogCanvas != null)
+                dialogCanvas.gameObject.SetActive(false);
         }
     }
 }
