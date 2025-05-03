@@ -1,31 +1,34 @@
 ﻿using UnityEngine;
-using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 namespace Interactive
 {
     [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Outline))]
     public class Interactable : MonoBehaviour
     {
-        // Дистанция взаимодействия
         [Header("Interactive Settings")]
+        // Дистанция взаимодействия
         public float interactionDistance = 3f;
         public InteractiveUseCase useCase;
         
+        private Outline _outline;
+        
         void Start()
         {
-            this.GetComponent<CustomPassVolume>().customPasses[0].enabled = false;
+            _outline = gameObject.GetComponent<Outline>();
         }
         
         public void OnHover()
         {
-            this.GetComponent<CustomPassVolume>().customPasses[0].enabled = true;
+            Debug.Log($"Hovering over {gameObject.name}");
+            
+            _outline.enabled = true;
         }
         
         public void OnUnhover()
         {
-            this.GetComponent<CustomPassVolume>().customPasses[0].enabled = false;
+            _outline.enabled = false;
         }
         
         public void PerformAction(string action, NavMeshAgent agent)

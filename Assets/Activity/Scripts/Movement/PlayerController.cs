@@ -1,4 +1,5 @@
-﻿using Interactive;
+﻿using System;
+using Interactive;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -12,50 +13,44 @@ namespace Movement
         public NavMeshAgent agent;
         public LayerMask groundMask;
         public LayerMask interactableMask;
+        
+        private Interactable _currentInteractable;
+        private Animator _animator;
 
-        private Interactable currentInteractable;
+        private void Start()
+        {
+            _animator = GetComponent<Animator>();
+        }
 
         void Update()
         {
-            
             HoverCheck();
+            Animate();
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, 100f, groundMask))
+                if (Physics.Raycast(ray, out RaycastHit groundHit, 100f, groundMask))
                 {
-                    agent.SetDestination(hit.point);
-                    if (currentInteractable != null)
+                    agent.SetDestination(groundHit.point);
+                    if (_currentInteractable != null)
                     {
-                        currentInteractable.OnUnhover();
-                        currentInteractable = null;
+                        _currentInteractable.OnUnhover();
+                        _currentInteractable = null;
                     }
                 }
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, 100f, interactableMask))
+                else if (Physics.Raycast(ray, out RaycastHit interactableHit, 100f, interactableMask))
                 {
-                    Interactable interactable = hit.collider.GetComponent<Interactable>();
+                    Interactable interactable = interactableHit.collider.GetComponent<Interactable>();
                     if (interactable != null)
                     {
-                        currentInteractable = interactable;
-                        currentInteractable.PerformAction("Use", agent);
+                        _currentInteractable = interactable;
+                        _currentInteractable.PerformAction("Use", agent);
                     }
                 }
             }
-            
-            if (Input.GetMouseButtonUp(1))
-            {
-                ActionWheelUI.Instance.Hide();
-            }
-
         }
-
         
         void HoverCheck()
         {
@@ -63,32 +58,48 @@ namespace Movement
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, interactableMask))
             {
                 Interactable hover = hit.collider.GetComponent<Interactable>();
-                if (hover != null && hover != currentInteractable)
+                if (hover != null && hover != _currentInteractable)
                 {
-                    if (currentInteractable != null)
-                        currentInteractable.OnUnhover();
+                    if (_currentInteractable != null)
+                        _currentInteractable.OnUnhover();
                     if (hover.interactionDistance > Vector3.Distance(agent.transform.position, hover.transform.position))
                     {
-                        currentInteractable = hover;
-                        currentInteractable.OnHover();
+                        _currentInteractable = hover;
+                        _currentInteractable.OnHover();
                     }
                 }
             }
-            else if (currentInteractable != null)
+            else if (_currentInteractable != null)
             {
-                currentInteractable.OnUnhover();
-                currentInteractable = null;
+                _currentInteractable.OnUnhover();
+                _currentInteractable = null;
             }
         }
-        
-        void ShowActionWheel()
+
+        void Animate()
         {
-            ActionWheelUI.Instance.Show(Input.mousePosition, currentInteractable);
+            if (agent.velocity == Vector3.zero)
+                _animator.Play(Animations.IDLE);
+            else if (agent.velocity != Vector3.zero)
+                _animator.Play(Animations.WALK);
+            
+            SetRotation();
         }
-        
-        void CloseActionWheel()
+
+        void SetRotation()
         {
-            ActionWheelUI.Instance.Hide();
+            Vector3 velocity = agent.velocity;
+            if (velocity.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(velocity.normalized);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+            }  
+        }
+
+        private class Animations
+        {
+            public const string IDLE = "Idle";
+            public const string WALK = "Walk";
         }
     }
 }
