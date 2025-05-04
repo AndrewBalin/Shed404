@@ -1,110 +1,108 @@
-using System.Collections;
-using System.Collections.Generic;
-using Dialogs.Scripts;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.AI;
-using Unity.VisualScripting;
+using GamePanels.PanelMenu;
 
-
-public class PlayerController : MonoBehaviour
+namespace Point_And_Click.Click_to_Move
 {
-    const string IDLE = "Idle";
-    const string WALK = "Walk";
-
-    CustomActions input;
-
-    NavMeshAgent agent;
-    Animator animator;
-
-    [Header("Movement")]
-    [SerializeField] ParticleSystem clickEffect;
-    [SerializeField] LayerMask clickableGround;
-
-    [Header("Action")]
-    
-    [SerializeField] LayerMask clickableObject;
-
-
-    //float lookRotationSpeed = 8f;
-
-    void Awake()
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(NavMeshAgent))]
+    public class PlayerController : MonoBehaviour
     {
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        private const string Idle = "Idle";
+        private const string Walk = "Walk";
+
+        [Header("Movement")]
+        [SerializeField] private ParticleSystem _clickEffect;
+        [SerializeField] private LayerMask _clickableGround;
+
+        [Header("Action")]
+        [SerializeField] private LayerMask _clickableObject;
+        [SerializeField] private ItemListUI _itemListUI;
+
+        private CustomActions _input;
+        private NavMeshAgent _agent;
+        private Animator _animator;
+
+        //float lookRotationSpeed = 8f;
+
+        private void Awake()
+        {
+            _agent = GetComponent<NavMeshAgent>();
+            _animator = GetComponent<Animator>();
         
-        input = new CustomActions();
-        AssignInputs();
-    }
-
-    void AssignInputs ()
-    {
-        input.Main.Controller.performed += ctx => ClickToMove();
-
-    }
-
-    void ClickToMove()
-    {
-        RaycastHit hit;
-        if (DialogUI.instance != null && DialogUI.instance.IsOpen)
-            return;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100, clickableObject))
-        {
-            Debug.Log(hit.collider.gameObject.name);
-            DialogManager.instance.StartDialog("introduction_start");
+            _input = new CustomActions();
+            AssignInputs();
         }
-        else if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),out hit, 100, clickableGround))
+        
+        private void OnEnable() => _input.Enable(); 
+
+        private void OnDisable() => _input.Disable();
+    
+        private void Update()
         {
-            agent.destination = hit.point;
-            if (clickEffect != null)
+            // FaceTarget();
+            SetAnimations();
+        }
+
+        private void AssignInputs ()
+        {
+            _input.Main.Controller.performed += ctx => ClickToMove();
+        }
+
+        private void ClickToMove()
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            
+            if (Physics.Raycast(ray, out hit, 100f, _clickableObject))
             {
-                Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);        
+                if (hit.collider.TryGetComponent(out CollectibleComponent collectible))
+                {
+                    Debug.Log($"Collectible hit: ID={collectible.ID}");
+                    
+                    CollectibleItem item = collectible.ToItem();
+                    _itemListUI.AddCollectedItem(item);
+                    
+                    Destroy(collectible.gameObject);
+                }
+
+                Debug.Log($"Clicked on object without CollectibleComponent: {hit.collider.gameObject.name}");
+                
+                return;
+            }
+            
+            if (Physics.Raycast(ray, out hit, 100f, _clickableGround))
+            {
+                _agent.destination = hit.point;
+                
+                if (_clickEffect != null)
+                {
+                    Instantiate(_clickEffect, hit.point + new Vector3(0f, 0.1f, 0f), _clickEffect.transform.rotation);
+                }
+                
+                FaceTarget();
             }
         }
-        FaceTarget();
         
-    }
-
-   
-
-    void OnEnable()
-    {
-        input.Enable();    
-    }
-
-    void OnDisable()
-    {
-        input.Disable();
-    }
-    
-    void Update()
-    {
-       // FaceTarget();
-        SetAnimations();
-    }
-
-    void FaceTarget()
-    {
-        Vector3 direction = (agent.destination - transform.position).normalized;    
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x,0,direction.z));
-        //transform.rotation = Quaternion.Slerp(transform.rotation,lookRotation, Time.deltaTime * lookRotationSpeed);
-        transform.rotation = lookRotation;  
-    }
-
-    void SetAnimations()
-    {
-        if (agent.velocity == Vector3.zero)
+        private void FaceTarget()
         {
-            animator.Play(IDLE);
+            Vector3 direction = (_agent.destination - transform.position).normalized;    
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x,0,direction.z));
+            //transform.rotation = Quaternion.Slerp(transform.rotation,lookRotation, Time.deltaTime * lookRotationSpeed);
+            transform.rotation = lookRotation;  
         }
-        else
+
+        private void SetAnimations()
         {
-            animator.Play(WALK);
+            if (_agent.velocity == Vector3.zero)
+                _animator.Play(Idle);
+            else
+                _animator.Play(Walk);
         }
     }
-}
 
-public class Quest: MonoBehaviour
-{
+    public class Quest: MonoBehaviour
+    {
     
+    }
 }
