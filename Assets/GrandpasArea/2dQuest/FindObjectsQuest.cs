@@ -3,26 +3,31 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using Movement;
 
 public class SimpleCanvasQuest : MonoBehaviour
 {
-    [Header("Основные настройки")]
-    public TMP_Text questText; // Элемент TextMeshPro для списка
-    public TMP_Text completionText; // Текст для сообщения о завершении
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
+    public TMP_Text questText; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ TextMeshPro пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    public TMP_Text completionText; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public List<GameObject> targetObjects = new List<GameObject>();
 
-    [Header("Тексты")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅ")]
     [TextArea(3, 10)]
-    public string questDescription = "Найди следующие объекты:\n{ITEMS}";
-    public string completionMessage = "Все объекты найдены!";
-    public float completionDisplayTime = 3f; // Время показа сообщения
+    public string questDescription = "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ:\n{ITEMS}";
+    public string completionMessage = "пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!";
+    public float completionDisplayTime = 3f; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    
+    public Canvas questCanvas;
+    public Canvas defaultCanvas;
+    public PlayerController player;
 
     private Dictionary<GameObject, bool> foundObjects = new Dictionary<GameObject, bool>();
     private int foundCount = 0;
 
     void Start()
     {
-        // Инициализация
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (completionText != null)
         {
             completionText.gameObject.SetActive(false);
@@ -64,7 +69,7 @@ public class SimpleCanvasQuest : MonoBehaviour
                 UpdateQuestText();
                 MarkObjectFound(clickedObject);
 
-                // Проверяем завершение квеста
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                 if (foundCount == targetObjects.Count)
                 {
                     ShowCompletionMessage();
@@ -75,7 +80,7 @@ public class SimpleCanvasQuest : MonoBehaviour
 
     void MarkObjectFound(GameObject obj)
     {
-        // Визуальное выделение найденного объекта
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Image img = obj.GetComponent<Image>();
         if (img != null)
         {
@@ -107,12 +112,17 @@ public class SimpleCanvasQuest : MonoBehaviour
             completionText.text = completionMessage;
             completionText.gameObject.SetActive(true);
 
-            // Через заданное время скрываем сообщение
+            // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             Invoke("HideCompletionMessage", completionDisplayTime);
+            
+            questCanvas.gameObject.SetActive(false);
+            defaultCanvas.gameObject.SetActive(true);
+
+            player.isQuestPassed = true;
         }
 
-        // Дополнительные действия при завершении
-        Debug.Log("Квест завершен!");
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
     }
 
     void HideCompletionMessage()
@@ -123,7 +133,7 @@ public class SimpleCanvasQuest : MonoBehaviour
         }
     }
 
-    [ContextMenu("Обновить текст квеста")]
+    [ContextMenu("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ")]
     public void EditorUpdateQuestText()
     {
         if (questText != null)

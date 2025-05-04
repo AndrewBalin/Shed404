@@ -1,11 +1,11 @@
 using Dialogs.Scripts;
 using UnityEngine;
 
-public class DialogStart : MonoBehaviour
+public class DialogDed : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
-        DialogManager.instance.StartDialog("introduction_start");
+        DialogManager.instance.StartDialog("introduction_near_home");
     }
 }

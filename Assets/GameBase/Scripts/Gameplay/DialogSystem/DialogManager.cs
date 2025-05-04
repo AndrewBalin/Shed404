@@ -14,9 +14,16 @@ namespace Dialogs.Scripts
         [Header("Dialog Data")]
         public TextAsset dialogJson;
         
+        [Header("Game Data")]
+        public GameObject player;
+        public NavMeshAgent agent;
+        public GameObject homeStartPosition;
+        
         private Dictionary<string, DialogNodeWithId> _dialogTree;
         private DialogNodeWithId _currentNode;
         private string _currentQuestId;
+        
+        
 
         [Inject] private IQuestService _questService;
         [Inject] private ScreenFader _screenFader;
@@ -36,6 +43,7 @@ namespace Dialogs.Scripts
                 Debug.LogError($"Ключ '{startId}' не найден в словаре диалогов.");
                 return;
             }
+            agent.destination = player.transform.position;
             ShowNode(_dialogTree[startId]);
 
             if (!string.IsNullOrEmpty(questId) && !_questService.IsQuestActive(questId))
@@ -51,6 +59,8 @@ namespace Dialogs.Scripts
             {
                 string eventId = next.Substring("event:".Length);
                 TriggerEvent(eventId);
+                Debug.Log("Диалог завершён.");
+                DialogUI.instance.Hide();
                 return;
             }
 
@@ -77,6 +87,10 @@ namespace Dialogs.Scripts
             Debug.Log($"[EVENT]: {eventId}");
             switch (eventId)
             {
+                case "teleport_to_home":
+                    player.transform.position = homeStartPosition.transform.position;
+                    agent.destination = homeStartPosition.transform.position;
+                    return;
                 case "spawn_car_drive":
                     _teleporter.TeleportTo("CarSpawnPoint");
                     _questService.CompleteObjective(_currentQuestId, eventId);

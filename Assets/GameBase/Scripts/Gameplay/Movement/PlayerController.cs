@@ -19,6 +19,8 @@ namespace Movement
         public NavMeshAgent agent;
         public LayerMask groundMask;
         public LayerMask interactableMask;
+
+        public bool isQuestPassed;
         
         private Interactable _currentInteractable;
         private Animator _animator;
@@ -28,6 +30,7 @@ namespace Movement
         {
             _animator = GetComponent<Animator>();
             _camera = mainCamera;
+            isQuestPassed = false;
         }
     
         public void SetActiveCamera(string cameraName)
@@ -60,8 +63,7 @@ namespace Movement
                 if (Physics.Raycast(ray, out RaycastHit interactableHit, 100f, interactableMask))
                 {
                     Interactable interactable = interactableHit.collider.GetComponent<Interactable>();
-                    if (interactable != null && interactable.interactionDistance > Vector3.Distance(
-                                                        agent.transform.position, interactable.transform.position))
+                    if (interactable != null)
                     {
                         _currentInteractable = interactable;
                         _currentInteractable.PerformAction("Use", agent);
