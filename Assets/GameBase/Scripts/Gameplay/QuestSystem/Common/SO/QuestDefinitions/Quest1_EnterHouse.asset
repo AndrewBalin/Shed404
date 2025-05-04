@@ -12,15 +12,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521237451f344f12add613fa476d0d25, type: 3}
   m_Name: Quest1_EnterHouse
   m_EditorClassIdentifier: 
-  _questId: Quest1_EnterHouse
+  _questId: QuestIntroduction
   _objectives:
-  - _objectiveId: EnterHouse
-    _parameter: HouseTrigger
+  - _objectiveId: 'talk_robot '
+    _parameter: 'introduction_start '
+    _type: 4
+    _nextObjectiveIds:
+    - 'fade_to_house '
+  - _objectiveId: 'fade_to_house '
+    _parameter: 'to_black '
+    _type: 5
+    _nextObjectiveIds:
+    - 'teleport_to_house '
+  - _objectiveId: 'teleport_to_house '
+    _parameter: 'house_entrance_area '
     _type: 0
     _nextObjectiveIds:
-    - SwitchCamera
-  - _objectiveId: 'SwitchCamera '
-    _parameter: 'InteriorCamera '
+    - 'talk_grandpa_welcome '
+  - _objectiveId: 'talk_grandpa_welcome '
+    _parameter: 'grandpa_welcome '
+    _type: 4
+    _nextObjectiveIds:
+    - 'fade_to_minigame '
+  - _objectiveId: 'fade_to_minigame '
+    _parameter: 'to_black  '
+    _type: 5
+    _nextObjectiveIds:
+    - 'start_2d_quest '
+  - _objectiveId: 'start_2d_quest '
+    _parameter: 'storage_minigame '
+    _type: 7
+    _nextObjectiveIds:
+    - fade_back_from_minigame
+  - _objectiveId: 'fade_back_from_minigame '
+    _parameter: 'to_black '
+    _type: 5
+    _nextObjectiveIds:
+    - 'talk_after_minigame '
+  - _objectiveId: 'talk_after_minigame '
+    _parameter: 'post_minigame '
+    _type: 4
+    _nextObjectiveIds:
+    - 'enter_garage '
+  - _objectiveId: 'enter_garage '
+    _parameter: 'garage_door '
+    _type: 2
+    _nextObjectiveIds:
+    - 'fade_to_car '
+  - _objectiveId: 'fade_to_car '
+    _parameter: 'to_black '
+    _type: 5
+    _nextObjectiveIds:
+    - 'spawn_car_drive '
+  - _objectiveId: 'spawn_car_drive '
+    _parameter: drive_camera
     _type: 3
     _nextObjectiveIds:
-    - 
+    - drive_birch
+  - _objectiveId: drive_birch
+    _parameter: drive_birch
+    _type: 4
+    _nextObjectiveIds:
+    - fishing
+  - _objectiveId: fishing
+    _parameter: fishing
+    _type: 4
+    _nextObjectiveIds: []
