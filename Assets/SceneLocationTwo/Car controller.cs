@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
+    public static CarController Instance;
+    
     [Header("Wheel Settings")]
     [SerializeField] private Transform _transformFL;
     [SerializeField] private Transform _transformFR;
@@ -55,6 +57,11 @@ public class CarController : MonoBehaviour
         ApplySteering();
         UpdateWheelVisuals();
     }
+    
+    public void EnableControl()
+    {
+        enabled = true;
+    }
 
     private void HandleEngineStart()
     {
@@ -62,7 +69,7 @@ public class CarController : MonoBehaviour
         {
             if (!_engineRunning)
             {
-                // Запуск двигателя
+                // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 _engineRunning = true;
                 SetActive(_engineStartSoundObject, true);
                 SetActive(_engineParticlesObject, true);
@@ -70,7 +77,7 @@ public class CarController : MonoBehaviour
             }
             else
             {
-                // Остановка двигателя
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 _engineRunning = false;
                 SetActive(_engineRunningSoundObject, false);
                 SetActive(_engineParticlesObject, false);

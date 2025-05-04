@@ -9,6 +9,8 @@ namespace Movement
 {
     public class PlayerController : MonoBehaviour
     {
+        public static PlayerController Instance;
+        
         [Header("Main Settings")]
         public Camera mainCamera;
         public Camera homeCamera;

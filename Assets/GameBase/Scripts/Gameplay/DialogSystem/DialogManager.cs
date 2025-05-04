@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using GameBase.Scripts.Gameplay.DialogSystem;
+using Gameplay.QuestSystem.Common.Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 namespace Dialogs.Scripts
 {
@@ -11,13 +14,13 @@ namespace Dialogs.Scripts
         [Header("Dialog Data")]
         public TextAsset dialogJson;
         
-        [Header("Game Data")]
-        public GameObject player;
-        public NavMeshAgent agent;
-        public GameObject homeStartPosition;
-        
         private Dictionary<string, DialogNodeWithId> _dialogTree;
         private DialogNodeWithId _currentNode;
+        private string _currentQuestId;
+
+        [Inject] private IQuestService _questService;
+        [Inject] private ScreenFader _screenFader;
+        [Inject] private PlayerTeleport _teleporter;
 
         void Awake()
         {
@@ -25,44 +28,36 @@ namespace Dialogs.Scripts
             _dialogTree = JsonUtility.FromJson<Wrapper>(dialogJson.text).ToDictionary();
         }
 
-        public void StartDialog(string startId)
+        public void StartDialog(string startId, string questId = null)
         {
+            _currentQuestId = questId;
             if (!_dialogTree.ContainsKey(startId))
             {
                 Debug.LogError($"Ключ '{startId}' не найден в словаре диалогов.");
-                Debug.Log(string.Join(", ", _dialogTree.Keys));
                 return;
             }
-            agent.destination = player.transform.position;
             ShowNode(_dialogTree[startId]);
+
+            if (!string.IsNullOrEmpty(questId) && !_questService.IsQuestActive(questId))
+                _questService.StartQuest(questId);
         }
-        
+
         public void ContinueDialog()
         {
             if (_currentNode == null) return;
 
             string next = _currentNode.next;
-                
-            // Если хотим вызывать событие, а не переходить к следующей ноде
             if (!string.IsNullOrEmpty(next) && next.StartsWith("event:"))
             {
                 string eventId = next.Substring("event:".Length);
-
                 TriggerEvent(eventId);
-                Debug.Log("Диалог завершён.");
-                DialogUI.instance.Hide();
                 return;
             }
 
             if (!string.IsNullOrEmpty(next) && _dialogTree.ContainsKey(next))
-            {
                 ShowNode(_dialogTree[next]);
-            }
             else
-            {
-                Debug.Log("Диалог завершён.");
                 DialogUI.instance.Hide();
-            }
         }
 
         public void SelectOption(int index)
@@ -73,31 +68,23 @@ namespace Dialogs.Scripts
 
         void ShowNode(DialogNodeWithId node)
         {
-            if (node == null)
-            {
-                Debug.LogError("Переданный узел диалога равен null.");
-                return;
-            }
-
-            if (DialogUI.instance == null)
-            {
-                Debug.LogError("DialogUI.instance не инициализирован.");
-                return;
-            }
             _currentNode = node;
             DialogUI.instance.Show(node);
         }
 
         void TriggerEvent(string eventId)
-        // TODO: Триггерить событие для квестовой системы (?)
         {
             Debug.Log($"[EVENT]: {eventId}");
             switch (eventId)
             {
-                case "teleport_to_home":
-                    player.transform.position = homeStartPosition.transform.position;
-                    agent.destination = homeStartPosition.transform.position;
-                    return;
+                case "spawn_car_drive":
+                    _teleporter.TeleportTo("CarSpawnPoint");
+                    _questService.CompleteObjective(_currentQuestId, eventId);
+                    CarController.Instance.EnableControl();
+                    break;
+                default:
+                    _questService.CompleteObjective(_currentQuestId, eventId);
+                    break;
             }
         }
 
