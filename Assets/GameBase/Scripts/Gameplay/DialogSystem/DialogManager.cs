@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Dialogs.Scripts
 {
@@ -9,6 +10,11 @@ namespace Dialogs.Scripts
 
         [Header("Dialog Data")]
         public TextAsset dialogJson;
+        
+        [Header("Game Data")]
+        public GameObject player;
+        public NavMeshAgent agent;
+        public GameObject homeStartPosition;
         
         private Dictionary<string, DialogNodeWithId> _dialogTree;
         private DialogNodeWithId _currentNode;
@@ -27,6 +33,7 @@ namespace Dialogs.Scripts
                 Debug.Log(string.Join(", ", _dialogTree.Keys));
                 return;
             }
+            agent.destination = player.transform.position;
             ShowNode(_dialogTree[startId]);
         }
         
@@ -42,6 +49,8 @@ namespace Dialogs.Scripts
                 string eventId = next.Substring("event:".Length);
 
                 TriggerEvent(eventId);
+                Debug.Log("Диалог завершён.");
+                DialogUI.instance.Hide();
                 return;
             }
 
@@ -83,6 +92,13 @@ namespace Dialogs.Scripts
         // TODO: Триггерить событие для квестовой системы (?)
         {
             Debug.Log($"[EVENT]: {eventId}");
+            switch (eventId)
+            {
+                case "teleport_to_home":
+                    player.transform.position = homeStartPosition.transform.position;
+                    agent.destination = homeStartPosition.transform.position;
+                    return;
+            }
         }
 
         [System.Serializable]

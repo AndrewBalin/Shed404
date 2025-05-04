@@ -10,18 +10,19 @@
       "id": "introduction_droid_help",
       "speaker": "Дед",
       "text": "Эй! Сизые! А ну-ка подсобите мальчонку.",
-      "next": "droid_overheat"
+      "next": "introduction_droid_overheat"
     },
     {
       "id": "introduction_droid_overheat",
       "speaker": "Внук",
       "text": "У вас дроид перегрелся.",
-      "next": "droid_not_overheat"
+      "next": "introduction_droid_not_overheat"
     },
     {
       "id": "introduction_droid_not_overheat",
       "speaker": "Дед",
-      "text": "Пустяки. Это у него система охлаждения барахлит. Я потом починю… если вспомню. Ладно, пошли в избу — покажу, где жить будешь."
+      "text": "Пустяки. Это у него система охлаждения барахлит. Я потом починю… если вспомню. Ладно, пошли в избу — покажу, где жить будешь.",
+      "next": "event:teleport_to_home"
     },
     {
       "id": "introduction_near_home",
@@ -31,8 +32,7 @@
     {
       "id": "introduction_welcome",
       "speaker": "Дед",
-      "text": "Гостем будешь. Обожди маленько самовар поставлю… хоть и электрический. Твоя комната, кстати, наверху, я уже всё подготовил.",
-      "next": "event:< Тут событие начала первого квеста >"
+      "text": "Гостем будешь. Обожди маленько самовар поставлю… хоть и электрический. Твоя комната, кстати, наверху, я уже всё подготовил."
     },
     {
       "id": "introduction_quest_table",

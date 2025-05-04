@@ -1,8 +1,10 @@
+using Movement;
 using UnityEngine;
 
 public class RoofOff : MonoBehaviour
 {
     public GameObject roof;
+    public PlayerController player;
 
     void OnTriggerEnter(Collider other)
     {
@@ -10,6 +12,7 @@ public class RoofOff : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             roof.SetActive(false);
+            player.SetActiveCamera("HomeCamera");
         }
     }
     void OnTriggerExit(Collider other)
@@ -17,6 +20,7 @@ public class RoofOff : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             roof.SetActive(true);
+            player.SetActiveCamera("MainCamera");
         }
     }
 }

@@ -10,19 +10,40 @@ namespace Movement
     public class PlayerController : MonoBehaviour
     {
         [Header("Main Settings")]
-        public Camera cam;
+        public Camera mainCamera;
+        public Camera homeCamera;
+            
+        [Header("NavMesh] Settings")]   
         public NavMeshAgent agent;
         public LayerMask groundMask;
         public LayerMask interactableMask;
         
         private Interactable _currentInteractable;
         private Animator _animator;
-
+        private Camera _camera;
+        
         private void Start()
         {
             _animator = GetComponent<Animator>();
+            _camera = mainCamera;
         }
-
+    
+        public void SetActiveCamera(string cameraName)
+        {
+            if (cameraName == "MainCamera")
+            {
+                _camera = mainCamera;
+                homeCamera.gameObject.SetActive(false);
+                mainCamera.gameObject.SetActive(true);
+            }
+            else if (cameraName == "HomeCamera")
+            {
+                _camera = homeCamera;
+                mainCamera.gameObject.SetActive(false);
+                homeCamera.gameObject.SetActive(true);
+            }
+        }
+        
         void Update()
         {
             Animate();
@@ -33,7 +54,7 @@ namespace Movement
 
             if (Input.GetMouseButtonDown(0))
             {
-                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out RaycastHit interactableHit, 100f, interactableMask))
                 {
                     Interactable interactable = interactableHit.collider.GetComponent<Interactable>();
@@ -54,7 +75,7 @@ namespace Movement
         
         void HoverCheck()
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, interactableMask))
             {
                 Interactable hover = hit.collider.GetComponent<Interactable>();
