@@ -1,0 +1,13 @@
+# Blender 4.4.3 MTL File: 'None'
+# www.blender.org
+
+newmtl PackedMaterial0
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd F:/Ассеты для геймджема/Сарай 404/Внук/pazan1_packed0_diffuse.png
+map_Ks F:/Ассеты для геймджема/Сарай 404/Внук/pazan1_packed0_specular.png
+map_Ns F:/Ассеты для геймджема/Сарай 404/Внук/pazan1_packed0_gloss.png
+map_Bump F:/Ассеты для геймджема/Сарай 404/Внук/pazan1_packed0_normal.png
