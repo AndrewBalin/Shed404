@@ -1,4 +1,5 @@
 ﻿using System;
+using Dialogs.Scripts;
 using Interactive;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,8 +25,10 @@ namespace Movement
 
         void Update()
         {
-            HoverCheck();
             Animate();
+            if (DialogUI.instance != null && DialogUI.instance.IsOpen)
+                return;
+            HoverCheck();
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
             if (Input.GetMouseButtonDown(0))
