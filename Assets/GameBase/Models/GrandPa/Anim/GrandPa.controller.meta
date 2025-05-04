@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/GameBase/Models/GrandPa/Anim/GrandPa.controller.meta
 guid: dee261f0f3365de418421eb99f139b30
+========
+guid: c9adb1f542a93ae489bacfeae21e8394
+>>>>>>>> origin/Final:Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Unity SDF.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 9100000
