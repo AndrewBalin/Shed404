@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-[System.Serializable]
+[Serializable]
 public class ActionButtonEntry
 {
     public Button button;

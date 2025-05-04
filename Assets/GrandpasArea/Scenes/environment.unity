@@ -35625,19 +35625,21 @@ MonoBehaviour:
   _colliderBR: {fileID: 36890231230274754}
   _maxAngle: 30
   fullPrivodActiv: 0
-  _forwardGears: 3
+  _forwardGears: 5
   _reverseGears: 2
   _forwardForces:
-  - 50
-  - 100
-  - 150
+  - 1000
+  - 1500
+  - 2000
+  - 2500
+  - 3000
   _reverseForces:
-  - 50
-  - 80
-  _engineStartSoundObject: {fileID: 900211971}
-  _engineRunningSoundObject: {fileID: 1870526979}
-  _gearShiftSoundObject: {fileID: 808266571}
-  _engineParticlesObject: {fileID: 1277398454}
+  - 800
+  - 1200
+  _engineStartSoundObject: {fileID: 0}
+  _engineRunningSoundObject: {fileID: 0}
+  _gearShiftSoundObject: {fileID: 0}
+  _engineParticlesObject: {fileID: 0}
 --- !u!4 &6207541054459586678
 Transform:
   m_ObjectHideFlags: 0
