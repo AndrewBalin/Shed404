@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 521237451f344f12add613fa476d0d25, type: 3}
+  m_Name: Quest9_PrepareForFishing
+  m_EditorClassIdentifier: 
+  _questId: Quest9_PrepareForFishing
+  _objectives:
+  - _objectiveId: EnterOutsideForTrip
+    _parameter: GrandpaOutsideTrigger2
+    _type: 0
+    _nextObjectiveIds:
+    - PlayTripDialogue
+  - _objectiveId: PlayTripDialogue
+    _parameter: GrandpaTripDialogue
+    _type: 4
+    _nextObjectiveIds:
+    - EnterHouseForSupplies
+  - _objectiveId: EnterHouseForSupplies
+    _parameter: SuppliesRoomTrigger
+    _type: 0
+    _nextObjectiveIds:
+    - CompleteSuppliesMiniGame
+  - _objectiveId: CompleteSuppliesMiniGame
+    _parameter: SuppliesCollectionMiniGame
+    _type: 7
+    _nextObjectiveIds:
+    - 
