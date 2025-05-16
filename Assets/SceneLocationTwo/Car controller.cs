@@ -46,6 +46,9 @@ public class CarController : MonoBehaviour
     {
         HandleEngineStart();
         HandleGearShift();
+        UpdateWheelVisuals();
+        ApplySteering();
+        ApplyBrakes();
     }
 
     private void FixedUpdate()
@@ -53,9 +56,7 @@ public class CarController : MonoBehaviour
         if (!_engineRunning) return;
 
         ApplyMotorTorque();
-        ApplyBrakes();
-        ApplySteering();
-        UpdateWheelVisuals();
+
     }
     
     public void EnableControl()
@@ -85,10 +86,19 @@ public class CarController : MonoBehaviour
         }
     }
 
+    private void FullPrivodActivate()
+    {
+        fullPrivodActiv = true;
+    }
+
+    private void FullPrivodDeactivate()
+    {
+        fullPrivodActiv = false;
+    }
+
     private void FinishEngineStart()
     {
         SetActive(_engineStartSoundObject, false);
-        //SetActive(_engineParticlesObject, false);
         SetActive(_engineRunningSoundObject, true);
     }
 
