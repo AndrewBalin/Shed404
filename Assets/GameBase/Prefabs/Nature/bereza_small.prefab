@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 64b62ff2d77f981408c5efd16684497d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.746622
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64b62ff2d77f981408c5efd16684497d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.0942497
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64b62ff2d77f981408c5efd16684497d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 42.65215
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64b62ff2d77f981408c5efd16684497d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e3dc9f3e996660d44a057b418324a44d, type: 2}
     - target: {fileID: 919132149155446097, guid: 64b62ff2d77f981408c5efd16684497d, type: 3}
       propertyPath: m_Name
-      value: "\u0411\u0435\u0440\u0451\u0437\u0430 \u043F\u043E\u043C\u0435\u043D\u044C\u0448\u0435"
+      value: bereza_small
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -66,15 +66,15 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 64b62ff2d77f981408c5efd16684497d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4632169123578348102}
+      addedObject: {fileID: 6641867308987586973}
   m_SourcePrefab: {fileID: 100100000, guid: 64b62ff2d77f981408c5efd16684497d, type: 3}
 --- !u!1 &4940175775494426330 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 64b62ff2d77f981408c5efd16684497d, type: 3}
   m_PrefabInstance: {fileID: 5210223179495699339}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &4632169123578348102
-BoxCollider:
+--- !u!136 &6641867308987586973
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -91,6 +91,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.3030586, y: 27.074327, z: 3.0398483}
-  m_Center: {x: 0.20947647, y: 13.537164, z: 0.32632446}
+  serializedVersion: 2
+  m_Radius: 0.9323745
+  m_Height: 15.252035
+  m_Direction: 1
+  m_Center: {x: 0, y: 5.911145, z: 0}
