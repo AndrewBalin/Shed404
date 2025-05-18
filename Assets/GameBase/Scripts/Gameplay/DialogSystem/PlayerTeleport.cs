@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameBase.Scripts.Gameplay.MovementSystem;
 using Movement;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ namespace GameBase.Scripts.Gameplay.DialogSystem
                 return;
             }
 
-            PlayerController.Instance.agent.Warp(_map[pointName].position);
+            PlayerController.Instance.Agent.Warp(_map[pointName].position);
         }
     }
 }
