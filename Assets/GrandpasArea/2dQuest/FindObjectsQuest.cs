@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using GameBase.Scripts.Gameplay.MovementSystem;
 using Movement;
 
 public class SimpleCanvasQuest : MonoBehaviour
@@ -118,7 +119,7 @@ public class SimpleCanvasQuest : MonoBehaviour
             questCanvas.gameObject.SetActive(false);
             defaultCanvas.gameObject.SetActive(true);
 
-            player.isQuestPassed = true;
+            player.IsQuestPassed = true;
         }
 
         // �������������� �������� ��� ����������

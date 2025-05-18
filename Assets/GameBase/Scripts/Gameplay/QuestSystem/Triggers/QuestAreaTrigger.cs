@@ -1,4 +1,5 @@
 using System;
+using GameBase.Scripts.Gameplay.MovementSystem;
 using UnityEngine;
 using Gameplay.QuestSystem.Common.Interfaces;
 using Movement;
