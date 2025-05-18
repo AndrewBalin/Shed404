@@ -84,7 +84,7 @@ public class SimpleCanvasQuest : MonoBehaviour
         Image img = obj.GetComponent<Image>();
         if (img != null)
         {
-            //img.color = new Color(0.7f, 0.7f, 0.7f, 0.5f);
+            img.color = new Color(1, 1, 1, 1);
         }
     }
 
@@ -99,7 +99,7 @@ public class SimpleCanvasQuest : MonoBehaviour
             string itemName = obj.name;
             bool found = foundObjects[obj];
 
-            itemsList += found ? $"<s><color=#808080>{itemName}</color></s>\n" : $"{itemName}\n";
+            itemsList += found ? $"<s><color=#808080>{itemName}</color></s>, " : $"{itemName}, ";
         }
 
         questText.text = questDescription.Replace("{ITEMS}", itemsList);
