@@ -58,7 +58,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e3dc9f3e996660d44a057b418324a44d, type: 2}
     - target: {fileID: 919132149155446097, guid: 52afb9c5ea915a242b03b6b054eb1bff, type: 3}
       propertyPath: m_Name
-      value: M_Realistic21_1
+      value: bereza_big
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 52afb9c5ea915a242b03b6b054eb1bff, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
