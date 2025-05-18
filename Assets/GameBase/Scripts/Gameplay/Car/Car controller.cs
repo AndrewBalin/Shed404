@@ -3,7 +3,7 @@ using UnityEngine;
 public class CarController : MonoBehaviour
 {
     public static CarController Instance;
-    
+
     [Header("Wheel Settings")]
     [SerializeField] private Transform _transformFL;
     [SerializeField] private Transform _transformFR;
