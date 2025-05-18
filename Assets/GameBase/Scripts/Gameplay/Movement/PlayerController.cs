@@ -52,17 +52,22 @@ namespace Movement
         void Update()
         {
             Animate();
+            
             if (DialogUI.instance != null && DialogUI.instance.IsOpen)
                 return;
+            
             HoverCheck();
+            
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+                
                 if (Physics.Raycast(ray, out RaycastHit interactableHit, 100f, interactableMask))
                 {
                     Interactable interactable = interactableHit.collider.GetComponent<Interactable>();
+                    
                     if (interactable != null)
                     {
                         _currentInteractable = interactable;
@@ -80,13 +85,16 @@ namespace Movement
         void HoverCheck()
         {
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+            
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, interactableMask))
             {
                 Interactable hover = hit.collider.GetComponent<Interactable>();
+                
                 if (hover != null && hover != _currentInteractable)
                 {
                     if (_currentInteractable != null)
                         _currentInteractable.OnUnhover();
+                    
                     _currentInteractable = hover;
                     _currentInteractable.OnHover();
                 }
@@ -111,6 +119,7 @@ namespace Movement
         void SetRotation()
         {
             Vector3 velocity = agent.velocity;
+            
             if (velocity.sqrMagnitude > 0.01f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(velocity.normalized);
