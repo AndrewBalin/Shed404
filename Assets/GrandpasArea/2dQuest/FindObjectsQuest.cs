@@ -26,8 +26,11 @@ public class SimpleCanvasQuest : MonoBehaviour
     private Dictionary<GameObject, bool> foundObjects = new Dictionary<GameObject, bool>();
     private int foundCount = 0;
 
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip _checkSound;
     void Start()
     {
+        _audioSource = gameObject.AddComponent<AudioSource>();
         // �������������
         if (completionText != null)
         {
@@ -69,6 +72,7 @@ public class SimpleCanvasQuest : MonoBehaviour
 
                 UpdateQuestText();
                 MarkObjectFound(clickedObject);
+                _audioSource.PlayOneShot(_checkSound);
 
                 // ��������� ���������� ������
                 if (foundCount == targetObjects.Count)
