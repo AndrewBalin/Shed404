@@ -3571,7 +3571,7 @@ WheelCollider:
   m_GameObject: {fileID: 372979871}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.35
+  m_Radius: 0.33
   m_SuspensionSpring:
     spring: 40000
     damper: 9000
@@ -4995,6 +4995,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000015258789, y: -0.00050354004}
   m_SizeDelta: {x: 0, y: 0.00097656}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!4 &534852486 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8255111157037086696, guid: 849b9585b2314b34db4251c51c88b4d9, type: 3}
+  m_PrefabInstance: {fileID: 1632187702}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &536097171
 GameObject:
   m_ObjectHideFlags: 0
@@ -5841,7 +5846,7 @@ WheelCollider:
   m_GameObject: {fileID: 627266306}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.35
+  m_Radius: 0.33
   m_SuspensionSpring:
     spring: 40000
     damper: 9000
@@ -6183,16 +6188,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0d97a0c54b4bbdb6f1c78dafb7910c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 330585545}
-  homeCamera: {fileID: 2075990318}
-  agent: {fileID: 654086131}
-  groundMask:
+  _mainCamera: {fileID: 0}
+  _homeCamera: {fileID: 0}
+  _agent: {fileID: 0}
+  _groundMask:
     serializedVersion: 2
-    m_Bits: 192
-  interactableMask:
+    m_Bits: 0
+  _interactableMask:
     serializedVersion: 2
-    m_Bits: 512
-  isQuestPassed: 0
+    m_Bits: 0
+  IsQuestPassed: 0
 --- !u!195 &654086131
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7630,7 +7635,7 @@ WheelCollider:
   m_GameObject: {fileID: 827616923}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.35
+  m_Radius: 0.33
   m_SuspensionSpring:
     spring: 40000
     damper: 9000
@@ -10225,7 +10230,7 @@ WheelCollider:
   m_GameObject: {fileID: 1066230210}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.35
+  m_Radius: 0.33
   m_SuspensionSpring:
     spring: 40000
     damper: 9000
@@ -11863,6 +11868,114 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.16000001, y: 0.010000001, z: 0.29900002}
   m_TimeToStationary: 0.5
+--- !u!1 &1205471124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1205471125}
+  - component: {fileID: 1205471128}
+  - component: {fileID: 1205471127}
+  - component: {fileID: 1205471126}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1205471125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205471124}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.24869914, y: -0.8454011, z: 0.12993915, w: -0.45449027}
+  m_LocalPosition: {x: 0.7201, y: -0.0061, z: -0.4222}
+  m_LocalScale: {x: 0.019839607, y: 0.021899998, z: 2.0563002}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 534852486}
+  m_LocalEulerAnglesHint: {x: 0, y: 89.541, z: 0}
+--- !u!65 &1205471126
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205471124}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1205471127
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205471124}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 6eac9e3e4b95a0d4788e22bfb089b675, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1205471128
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205471124}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1220089963
 GameObject:
   m_ObjectHideFlags: 0
@@ -14978,7 +15091,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -9200210366883936642, guid: 849b9585b2314b34db4251c51c88b4d9, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8255111157037086696, guid: 849b9585b2314b34db4251c51c88b4d9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1205471125}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 849b9585b2314b34db4251c51c88b4d9, type: 3}
       insertIndex: -1
@@ -23075,7 +23191,7 @@ MonoBehaviour:
   - {fileID: 1538663567}
   _4wd: {fileID: 700845345}
   _4wdToggleKey: 103
-  _4wdSound: {fileID: 0}
+  _4wdSound: {fileID: 8300000, guid: 19e974871abdd30469bff9794e75f9ea, type: 3}
   _waterSpeedReduction: 0.7
   _mudSlipFactor: 0.4
   _mudSpeedPenalty: 0.5
