@@ -2,7 +2,7 @@
 - Project name: Shed404
 - Unity version: Unity 6000.0.47f1
 - Active game object:
-  - Name: 2dIvent
+  - Name: Canvas
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

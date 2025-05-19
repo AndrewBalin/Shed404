@@ -11,11 +11,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GameBase/Scene/MainMenu.unity
     guid: c0251a60e3c9f473c8864ea83aa8beb4
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameBase/Scene/environment.unity
     guid: 35f4b77d81b85224480e5d6ff5e9e584
   - enabled: 1
-    path: Assets/GameBase/Scene/Other/End.unity
+    path: Assets/GameBase/Scene/Game.unity
+    guid: 444a32c747812c943b84f41c4f244e93
+  - enabled: 1
+    path: Assets/GameBase/Scene/End.unity
     guid: ecbc4fe0ee9787c47a8e599b26988a65
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
