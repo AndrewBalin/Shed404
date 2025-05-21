@@ -1727,7 +1727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b142b0d1516744f28a0cb1714db42af6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameSceneName: environment
+  _gameSceneName: Game
   _audioMixer: {fileID: 24100000, guid: 863f52401731a493f9a628aa253f525e, type: 2}
 --- !u!4 &726206593
 Transform:
