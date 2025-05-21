@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameBase.Scripts.Gameplay.DialogSystem;
+using GameBase.Scripts.Gameplay.TempQuest;
 using Gameplay.QuestSystem.Common.Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
@@ -63,6 +64,14 @@ namespace Dialogs.Scripts
                 DialogUI.instance.Hide();
                 return;
             }
+            if (!string.IsNullOrEmpty(next) && next.StartsWith("quest_end:"))
+            {
+                string questName = next.Substring("quest_end:".Length);
+                QuestEnd(questName);
+                Debug.Log("Диалог завершён.");
+                DialogUI.instance.Hide();
+                return;
+            }
 
             if (!string.IsNullOrEmpty(next) && _dialogTree.ContainsKey(next))
                 ShowNode(_dialogTree[next]);
@@ -96,10 +105,25 @@ namespace Dialogs.Scripts
                     _questService.CompleteObjective(_currentQuestId, eventId);
                     CarController.Instance.EnableControl();
                     break;
+                case "talk_with_ded_1_end":
+                    QuestSystem.instance.CompleteQuest("talk_with_ded_1");
+                    break;
+                case "talk_with_ded_2_end":
+                    QuestSystem.instance.CompleteQuest("talk_with_ded_2");
+                    break;
+                case "talk_with_ded_3_end":
+                    QuestSystem.instance.CompleteQuest("talk_with_ded_3");
+                    break;
                 default:
                     _questService.CompleteObjective(_currentQuestId, eventId);
                     break;
             }
+        }
+
+        void QuestEnd(string questName)
+        {
+            Debug.Log($"[END QUEST]: {questName}");
+            QuestSystem.instance.CompleteQuest(questName);
         }
 
         [System.Serializable]

@@ -56,19 +56,19 @@ namespace Dialogs.Scripts
 
             speakerText.text = node.speaker;
             dialogText.text = node.text;
-
-            foreach (Transform child in optionsContainer.transform)
-                Destroy(child.gameObject);
-
-            continueButton.SetActive(!string.IsNullOrEmpty(node.next));
             
-            for (int i = 0; i < node.options.Count; i++)
-            {
-                var go = Instantiate(optionPrefab, optionsContainer.transform);
-                go.GetComponentInChildren<Text>().text = node.options[i].text;
-                int captured = i;
-                go.GetComponent<Button>().onClick.AddListener(() => DialogManager.instance.SelectOption(captured));
-            }
+            // foreach (Transform child in optionsContainer.transform)
+            //     Destroy(child.gameObject);
+
+            continueButton.SetActive(true);
+            
+            // for (int i = 0; i < node.options.Count; i++)
+            // {
+            //     var go = Instantiate(optionPrefab, optionsContainer.transform);
+            //     go.GetComponentInChildren<Text>().text = node.options[i].text;
+            //     int captured = i;
+            //     go.GetComponent<Button>().onClick.AddListener(() => DialogManager.instance.SelectOption(captured));
+            // }
         }
         public void Hide()
         {

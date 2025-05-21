@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Dialogs.Scripts;
+using GameBase.Scripts.Gameplay.TempQuest;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Interactive
@@ -11,7 +13,8 @@ namespace Interactive
         // Дистанция взаимодействия
         public float interactionDistance = 3f;
         public InteractiveUseCase useCase;
-        public string iaction;
+        public string handleAction;
+        public string questPassed;
         
         [Header("Quest Settings")]
         public Canvas quest1Canvas;
@@ -33,31 +36,49 @@ namespace Interactive
         
         public void OnHover()
         {
+            if (!string.IsNullOrEmpty(questPassed) && !QuestSystem.instance.IsQuestActive(questPassed)) return;
             if (_active) return;
             _outline.enabled = true;
         }
         
         public void OnUnhover()
         {
+            if (!string.IsNullOrEmpty(questPassed) && !QuestSystem.instance.IsQuestActive(questPassed)) return;
             if (_active) return;
             _outline.enabled = false;
         }
         
         public void PerformAction(string action, NavMeshAgent agent)
         {
+            if (!string.IsNullOrEmpty(questPassed) && !QuestSystem.instance.IsQuestActive(questPassed)) return;
             if (_active) return;
             // useCase.Interact(this, agent, action);
-            switch (iaction)
+            if (!string.IsNullOrEmpty(handleAction) && handleAction.StartsWith("dialog_start:"))
+            {
+                DialogManager.instance.StartDialog(handleAction.Substring("dialog_start:".Length));
+                return;
+            }
+            
+            switch (handleAction)
             {
                 case "quest1":
                     defaultCanvas.gameObject.SetActive(false);
                     quest1Canvas.gameObject.SetActive(true);
+                    _outline.enabled = false;
                     _active = true;
                     return;
                 case "quest2":
                     camera.gameObject.SetActive(false);
                     player.gameObject.SetActive(false);
                     car.gameObject.SetActive(true);
+                    _outline.enabled = false;
+                    _active = true;
+                    return;
+                case "CollectItem":
+                    bool collected = QuestSystem.instance.Action("CollectItem", this.gameObject);
+                    if (!collected) return;
+                    _outline.enabled = false;
+                    _active = true;
                     return;
             }
         }

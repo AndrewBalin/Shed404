@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using GameBase.Scripts.Gameplay.MovementSystem;
+using GameBase.Scripts.Gameplay.TempQuest;
 using Movement;
 
 public class SimpleCanvasQuest : MonoBehaviour
@@ -124,6 +125,8 @@ public class SimpleCanvasQuest : MonoBehaviour
             defaultCanvas.gameObject.SetActive(true);
 
             player.IsQuestPassed = true;
+            
+            QuestSystem.instance.CompleteQuest("find_objects_1");
         }
 
         // �������������� �������� ��� ����������

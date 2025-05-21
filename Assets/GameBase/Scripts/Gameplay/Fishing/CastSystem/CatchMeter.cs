@@ -1,4 +1,5 @@
 using System;
+using GameBase.Scripts.Gameplay.TempQuest;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -119,6 +120,7 @@ namespace Fishing.CastSystem
         {
             _isActive = false;
             FishingEnded?.Invoke(caught);
+            QuestSystem.instance.Action("fishing", null);
         }
 
         private void ConfigureHandleSize()

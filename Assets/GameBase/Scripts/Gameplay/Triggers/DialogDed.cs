@@ -6,6 +6,6 @@ public class DialogDed : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
-        DialogManager.instance.StartDialog("introduction_near_home");
+        DialogManager.instance.StartDialog("introduction_buhat");
     }
 }
