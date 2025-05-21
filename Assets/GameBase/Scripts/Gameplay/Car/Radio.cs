@@ -8,14 +8,16 @@ public class Radio : MonoBehaviour
 {
     [SerializeField] private List<AudioClip> songs;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private TMP_Text songTitleText; // Ссылка на UI Text
-    [SerializeField] private float scrollSpeed = 50f; // Скорость прокрутки текста
-    [SerializeField] private float displayDelay = 2f; // Задержка перед началом прокрутки
+    [SerializeField] private TMP_Text songTitleText; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ UI Text
+    [SerializeField] private float scrollSpeed = 50f; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] private float displayDelay = 2f; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     private int currentSongIndex = 0;
     private Coroutine scrollCoroutine;
     private string fullSongName;
 
+    private bool _rep = true;
+    private bool _inter = true;
     public delegate void OnSongChangedHandler(AudioClip newSong);
     public event OnSongChangedHandler OnSongChanged;
 
@@ -32,7 +34,7 @@ public class Radio : MonoBehaviour
 
         if (songTitleText == null)
         {
-            Debug.LogWarning("Не назначен UI Text для отображения названия песни!");
+            Debug.LogWarning("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ UI Text пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!");
         }
 
         PlayCurrentSong();
@@ -85,37 +87,37 @@ public class Radio : MonoBehaviour
     {
         fullSongName = songName;
 
-        // Останавливаем предыдущую корутину, если она есть
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         if (scrollCoroutine != null)
         {
             StopCoroutine(scrollCoroutine);
         }
 
-        // Сначала показываем полное название без прокрутки
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         songTitleText.text = fullSongName;
 
-        // Запускаем прокрутку после задержки
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         scrollCoroutine = StartCoroutine(ScrollSongTitle());
     }
 
     private IEnumerator ScrollSongTitle()
     {
-        // Ждем перед началом прокрутки
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         yield return new WaitForSeconds(displayDelay);
 
-        // Если текст помещается, не прокручиваем
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (IsTextFitting(fullSongName))
         {
             yield break;
         }
 
-        // Добавляем пробелы в конце для эффекта "ухода" текста
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅ" пїЅпїЅпїЅпїЅпїЅпїЅ
         string scrollingText = fullSongName + "     ";
         float textPosition = 0;
 
         while (true)
         {
-            // Вычисляем видимую часть текста
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             int startChar = Mathf.FloorToInt(textPosition);
             int visibleChars = Mathf.CeilToInt(GetTextWidth(fullSongName) / songTitleText.fontSize);
 
@@ -128,7 +130,7 @@ public class Radio : MonoBehaviour
 
             songTitleText.text = visibleText;
 
-            // Двигаем позицию
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             textPosition += scrollSpeed * Time.deltaTime;
             if (textPosition > scrollingText.Length)
             {
@@ -141,15 +143,15 @@ public class Radio : MonoBehaviour
 
     private bool IsTextFitting(string text)
     {
-        // Простая проверка - если название короче N символов, не прокручиваем
-        // Можно заменить на более точную проверку с учетом размера UI элемента
-        return text.Length <= 10; // Эмпирическое значение, подберите под ваш UI
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ N пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ UI пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        return text.Length <= 10; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ UI
     }
 
     private float GetTextWidth(string text)
     {
-        // Примерная оценка ширины текста
-        // Для точного расчета лучше использовать TextGenerator
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ TextGenerator
         return text.Length * songTitleText.fontSize * 0.6f;
     }
 
@@ -157,7 +159,24 @@ public class Radio : MonoBehaviour
     {
         if (currentSong.name == "Now_Play_No_Name_Techno_Remix_by_akxmo")
         {
-            Debug.Log("Играет типичный чёрный рэп!");
+            if (_rep)
+            {
+                _rep = false;
+                StartCoroutine(StartDialogWithDelay(5f, "rep"));
+            }
         }
+        if (currentSong.name == "Now_Play_Internatsional_Techno_Remix_by_akxmo")
+        {
+            if (_inter)
+            {
+                _inter = false;
+                StartCoroutine(StartDialogWithDelay(5f, "internatsional"));
+            }
+        }
+    }
+    private IEnumerator StartDialogWithDelay(float delay, string text)
+    {
+        yield return new WaitForSeconds(delay);
+        Dialogs.Scripts.DialogManager.instance.StartDialog(text);
     }
 }

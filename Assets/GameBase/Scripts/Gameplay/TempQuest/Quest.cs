@@ -64,6 +64,10 @@ namespace GameBase.Scripts.Gameplay.TempQuest
             Debug.Log($"Квест '{questTitle}' завершен.");
             OnQuestComplete();
         }
+        
+        protected virtual void OnAction()
+        {
+        }
 
         public bool Action(String action_name, GameObject action_object)
         {
@@ -99,6 +103,12 @@ namespace GameBase.Scripts.Gameplay.TempQuest
                     }
                     return true;
                 }
+            }
+
+            if (questType == QuestType.Collection && action_name == "fishing")
+            {
+                Debug.Log("Fishing 1");
+                OnAction();
             }
 
             return false;

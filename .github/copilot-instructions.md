@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, WalkableInterior, WalkableExterior, IgnoreNavMesh, Interactable
 - Active game object:
-  - Name: Oka
-  - Tag: Player
+  - Name: Fishing
+  - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

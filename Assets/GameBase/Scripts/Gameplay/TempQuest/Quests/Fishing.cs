@@ -11,22 +11,22 @@ namespace GameBase.Scripts.Gameplay.TempQuest.Quests
         public int count;
         public TextMeshProUGUI countText;
         
-        private int _doneCount;
+        public int _doneCount;
         
         protected override void OnQuestComplete()
         {
             SceneManager.LoadScene("End");
         }
         
-        public bool Action(String action_name, GameObject action_object)
+        protected override void OnAction()
         {
+            Debug.Log("Fishing 1");
             _doneCount++;
             countText.text = $"{_doneCount}/{count}";
             if (count == _doneCount)
             {
                 QuestComplete();
             }
-            return true;
         }
     }
 }

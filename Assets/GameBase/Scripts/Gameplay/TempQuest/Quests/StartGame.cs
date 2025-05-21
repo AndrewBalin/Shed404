@@ -37,7 +37,6 @@ namespace GameBase.Scripts.Gameplay.TempQuest.Quests
             player.gameObject.SetActive(true);
             mainCamera.gameObject.SetActive(true);
             sceneCamera.gameObject.SetActive(false);
-            QuestSystem.instance.StartQuest("talk_with_ded_1");
 
             this.enabled = false;
         }
